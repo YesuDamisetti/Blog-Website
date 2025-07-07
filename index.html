@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inkwell | Beautiful Blog Platform</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.7/dist/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-decoration">
+        <div class="bg-circle bg-circle-1"></div>
+        <div class="bg-circle bg-circle-2"></div>
+        <div class="bg-circle bg-circle-3"></div>
+        <div class="bg-gradient-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon-wrapper">
+                    <i data-lucide="feather" class="brand-icon"></i>
+                </div>
+                <span class="brand-text">Inkwell</span>
+                <span class="brand-tagline">Beautiful Writing</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item active" id="nav-home">
+                    <i data-lucide="home"></i>
+                    <span>Home</span>
+                    <div class="nav-item-indicator"></div>
+                </button>
+                <button class="nav-item" id="nav-new-post">
+                    <i data-lucide="plus-circle"></i>
+                    <span>New Post</span>
+                    <div class="nav-item-indicator"></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Posts List View -->
+        <section id="posts-list" class="view-section">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i data-lucide="sparkles"></i>
+                        <span>Welcome to the future of blogging</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="hero-title-main">Beautiful Stories</span>
+                        <span class="hero-title-sub">Deserve Beautiful Homes</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Craft compelling narratives with our elegant markdown editor. 
+                        Experience the perfect blend of simplicity and sophistication.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i data-lucide="file-text"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="posts-count">0</span>
+                                <span class="stat-label">Posts Published</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i data-lucide="type"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="words-count">0</span>
+                                <span class="stat-label">Words Written</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i data-lucide="clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="read-time">0</span>
+                                <span class="stat-label">Minutes of Reading</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-hero" id="hero-new-post">
+                            <i data-lucide="pen-tool"></i>
+                            <span>Start Writing</span>
+                            <div class="btn-shine"></div>
+                        </button>
+                        <button class="btn btn-secondary btn-hero" id="hero-explore">
+                            <i data-lucide="compass"></i>
+                            <span>Explore Posts</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Posts Section -->
+            <div class="posts-section">
+                <div class="section-header">
+                    <div class="section-title-wrapper">
+                        <h2 class="section-title">Latest Stories</h2>
+                        <p class="section-subtitle">Discover thoughts, ideas, and inspiration</p>
+                    </div>
+                    <button class="btn btn-primary" id="header-new-post">
+                        <i data-lucide="plus"></i>
+                        <span>Create Post</span>
+                    </button>
+                </div>
+                
+                <div class="posts-grid" id="posts-container">
+                    <!-- Posts will be rendered here -->
+                </div>
+                
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-illustration">
+                        <div class="empty-icon">
+                            <i data-lucide="file-plus"></i>
+                        </div>
+                        <div class="empty-sparkles">
+                            <i data-lucide="sparkles"></i>
+                            <i data-lucide="sparkles"></i>
+                            <i data-lucide="sparkles"></i>
+                        </div>
+                    </div>
+                    <h3 class="empty-title">Your Story Starts Here</h3>
+                    <p class="empty-description">
+                        Every great writer started with a blank page. 
+                        Create your first post and begin your journey.
+                    </p>
+                    <button class="btn btn-primary btn-large" id="empty-new-post">
+                        <i data-lucide="pen-tool"></i>
+                        <span>Write Your First Story</span>
+                        <div class="btn-shine"></div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Post View -->
+        <section id="post-view" class="view-section" style="display: none;">
+            <div class="post-header">
+                <button class="btn btn-ghost" id="back-to-list">
+                    <i data-lucide="arrow-left"></i>
+                    <span>Back to Stories</span>
+                </button>
+                <div class="post-actions">
+                    <button class="btn btn-secondary" id="edit-post">
+                        <i data-lucide="edit-3"></i>
+                        <span>Edit</span>
+                    </button>
+                    <button class="btn btn-danger" id="delete-post">
+                        <i data-lucide="trash-2"></i>
+                        <span>Delete</span>
+                    </button>
+                </div>
+            </div>
+            
+            <article class="post-article">
+                <div class="post-hero">
+                    <div class="post-meta">
+                        <div class="post-category">
+                            <i data-lucide="bookmark"></i>
+                            <span>Story</span>
+                        </div>
+                        <div class="post-info">
+                            <span class="post-date" id="view-post-date"></span>
+                            <span class="post-separator">•</span>
+                            <span class="post-read-time" id="view-post-read-time"></span>
+                            <span class="post-separator">•</span>
+                            <span class="post-word-count" id="view-post-word-count"></span>
+                        </div>
+                    </div>
+                    <h1 class="post-title" id="view-post-title"></h1>
+                </div>
+                <div class="post-content prose" id="view-post-content"></div>
+            </article>
+        </section>
+
+        <!-- Editor View -->
+        <section id="editor-view" class="view-section" style="display: none;">
+            <div class="editor-header">
+                <div class="editor-nav">
+                    <button class="btn btn-ghost" id="back-from-editor">
+                        <i data-lucide="arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                    <div class="editor-status">
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span class="status-text">Draft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-actions">
+                    <button class="btn btn-secondary" id="preview-toggle">
+                        <i data-lucide="eye"></i>
+                        <span>Preview</span>
+                    </button>
+                    <button class="btn btn-primary" id="save-post">
+                        <i data-lucide="save"></i>
+                        <span>Publish</span>
+                        <div class="btn-shine"></div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-title-section">
+                    <input type="text" class="title-input" id="editor-title" placeholder="Give your story a captivating title...">
+                    <div class="title-underline"></div>
+                </div>
+
+                <div class="editor-main">
+                    <div class="editor-panel">
+                        <div class="editor-toolbar">
+                            <div class="toolbar-section">
+                                <span class="toolbar-label">Format</span>
+                                <div class="toolbar-group">
+                                    <button class="toolbar-btn" id="btn-bold" title="Bold (Ctrl+B)">
+                                        <i data-lucide="bold"></i>
+                                    </button>
+                                    <button class="toolbar-btn" id="btn-italic" title="Italic (Ctrl+I)">
+                                        <i data-lucide="italic"></i>
+                                    </button>
+                                    <button class="toolbar-btn" id="btn-heading" title="Heading">
+                                        <i data-lucide="heading"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="toolbar-section">
+                                <span class="toolbar-label">Insert</span>
+                                <div class="toolbar-group">
+                                    <button class="toolbar-btn" id="btn-link" title="Link">
+                                        <i data-lucide="link"></i>
+                                    </button>
+                                    <button class="toolbar-btn" id="btn-image" title="Image">
+                                        <i data-lucide="image"></i>
+                                    </button>
+                                    <button class="toolbar-btn" id="btn-code" title="Code Block">
+                                        <i data-lucide="code"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="toolbar-section">
+                                <span class="toolbar-label">Structure</span>
+                                <div class="toolbar-group">
+                                    <button class="toolbar-btn" id="btn-quote" title="Quote">
+                                        <i data-lucide="quote"></i>
+                                    </button>
+                                    <button class="toolbar-btn" id="btn-list" title="Bullet List">
+                                        <i data-lucide="list"></i>
+                                    </button>
+                                    <button class="toolbar-btn" id="btn-list-ordered" title="Numbered List">
+                                        <i data-lucide="list-ordered"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editor-workspace">
+                            <textarea class="editor-textarea" id="editor-content" placeholder="Begin your story... Use Markdown to format your text beautifully."></textarea>
+                            <div class="editor-footer">
+                                <div class="editor-stats">
+                                    <span class="stat-item">
+                                        <i data-lucide="type"></i>
+                                        <span id="editor-word-count">0 words</span>
+                                    </span>
+                                    <span class="stat-item">
+                                        <i data-lucide="clock"></i>
+                                        <span id="editor-read-time">0 min read</span>
+                                    </span>
+                                </div>
+                                <div class="editor-shortcuts">
+                                    <span class="shortcut-hint">
+                                        <kbd>Ctrl</kbd> + <kbd>S</kbd> to save
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="preview-panel" id="preview-panel">
+                        <div class="preview-header">
+                            <h3 class="preview-title">
+                                <i data-lucide="eye"></i>
+                                Live Preview
+                            </h3>
+                            <div class="preview-badge">Real-time</div>
+                        </div>
+                        <div class="preview-content prose" id="preview-content">
+                            <div class="preview-placeholder">
+                                <i data-lucide="file-text"></i>
+                                <p>Your beautiful story will appear here as you type...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title"></h3>
+                <button class="modal-close" onclick="hideModal()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-message" id="modal-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn btn-danger" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" style="display: none;">
+        <div class="toast-icon">
+            <i data-lucide="check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <span class="toast-message" id="toast-message"></span>
+        </div>
+        <button class="toast-close" onclick="hideToast()">
+            <i data-lucide="x"></i>
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
